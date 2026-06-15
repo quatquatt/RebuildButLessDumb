@@ -4,6 +4,7 @@
   jq,
   nixVersions,
   git,
+  stdenv,
 }:
 
 writeShellApplication {
@@ -13,7 +14,20 @@ writeShellApplication {
     jq
     git
   ];
-  excludeShellChecks = [ "SC2181" ];
+
+  # this will never be cached
+  derivationArgs = {
+    allowSubstitutes = true;
+    preferLocalBuild = false;
+  };
+
+  # disables shellcheck. it has a relatively large eval penalty, and we want
+  # this to be fast for the purposes of `nix run`
+  checkPhase = ''
+    runHook preCheck
+    ${stdenv.shellDryRun} "$target"
+    runHook postCheck
+  '';
 
   text = ''
     set -e
