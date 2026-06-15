@@ -9,6 +9,7 @@ let
   });
 
   packages = {
+    dims = callPackage ./dims/package.nix {};
     fuiska = callPackage ./fuiska/package.nix {};
     hue = callPackage ./hue/package.nix {};
     imanpu = callPackage ./imanpu/package.nix {};

@@ -19,10 +19,12 @@
       default = pkgs.mkShellNoCC {
         packages = builtins.attrValues {
           inherit (self.legacyPackages.${system})
+            dims
             fuiska
             rbld
             imanpu
-            unify;
+            unify
+            ;
         };
       };
       }
